@@ -1,4 +1,5 @@
 import marshmallow
+import pytest
 
 from pytemplate.domain.factory import burger_factory
 from pytemplate.domain.validators import BurgerSchema
@@ -6,12 +7,9 @@ from pytemplate.domain.validators import BurgerSchema
 
 def test_valid_data():
     data = {"bread": "Whole meat", "patty": "Chicken"}
-    try:
-        validated_data = BurgerSchema().load(data)
-        result = burger_factory(data)
-        assert result == validated_data
-    except marshmallow.ValidationError as e:
-        assert False, f"Unexpected validation error: {e}"
+    validated_data = BurgerSchema().load(data)
+    result = burger_factory(data)
+    assert result == validated_data
 
 
 def test_missing_bread():
