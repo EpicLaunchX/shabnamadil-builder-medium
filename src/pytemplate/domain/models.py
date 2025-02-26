@@ -1,6 +1,10 @@
 from dataclasses import dataclass
 from typing import List, Optional
 
+import marshmallow
+
+from pytemplate.domain.validators import BurgerSchema
+
 
 @dataclass
 class Burger:
@@ -33,3 +37,11 @@ class Burger:
                 raise ValueError("Toppings type must be list")
             if not all(isinstance(topping, str) for topping in self.toppings):
                 raise ValueError("All toppings must be strings")
+
+
+def burger_factory(data):
+    try:
+        validated_data = BurgerSchema().load(data)
+        return Burger(**validated_data)
+    except marshmallow.ValidationError as err:
+        raise marshmallow.ValidationError(err.messages) from err

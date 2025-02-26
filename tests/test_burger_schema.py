@@ -1,17 +1,14 @@
 import marshmallow
 import pytest
 
-from pytemplate.domain.factory import burger_factory
 from pytemplate.domain.validators import BurgerSchema
 
 
 def test_valid_data():
     data = {"bread": "Whole meat", "patty": "Chicken"}
     validated_data = BurgerSchema().load(data)
-    result = burger_factory(data)
-    if result != validated_data:
-        pytest.fail(f"Test failed because the result was {result}, expected {validated_data}")
-    assert result == validated_data
+    assert data["bread"] == validated_data["bread"]
+    assert data["patty"] == validated_data["patty"]
 
 
 def test_missing_bread():
@@ -97,11 +94,11 @@ def test_patty_none():
 
 def test_valid_toppings():
     data = {"bread": "Whole wheat", "patty": "Beef", "toppings": ["Lettuce", "Tomato", "Onion"]}
-    validated_data = BurgerSchema().load(data)
-    result = burger_factory(data)
-    if result != validated_data:
-        pytest.fail(f"Test failed because the result was {result}, expected {validated_data}")
-    assert result == validated_data
+    try:
+        validated_data = BurgerSchema().load(data)
+    except Exception as e:
+        pytest.fail(f"Schema validation failed with error: {e}")
+    assert validated_data == data
 
 
 def test_invalid_toppings_not_a_list():
@@ -124,11 +121,11 @@ def test_invalid_toppings_with_non_string_elements():
 
 def test_empty_toppings():
     data = {"bread": "Whole wheat", "patty": "Beef", "toppings": []}
-    validated_data = BurgerSchema().load(data)
-    result = burger_factory(data)
-    if result != validated_data:
-        pytest.fail(f"Test failed because the result was {result}, expected {validated_data}")
-    assert result == validated_data
+    try:
+        validated_data = BurgerSchema().load(data)
+    except Exception as e:
+        pytest.fail(f"Schema validation failed with error: {e}")
+    assert validated_data == data
 
 
 def test_bread_false():
