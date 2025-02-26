@@ -1,147 +1,178 @@
+import marshmallow
+
 from pytemplate.domain.factory import burger_factory
+from pytemplate.domain.validators import BurgerSchema
 
 
 def test_valid_data():
     data = {"bread": "Whole meat", "patty": "Chicken"}
     try:
+        validated_data = BurgerSchema().load(data)
         result = burger_factory(data)
-        assert isinstance(result, dict)
-        assert result["bread"] == "Whole meat"
-        assert result["patty"] == "Chicken"
-    except Exception as e:
-        assert False, f"Unexpected error: {e}"
+        assert result == validated_data
+    except marshmallow.ValidationError as e:
+        assert False, f"Unexpected validation error: {e}"
 
 
 def test_missing_bread():
     data = {"patty": "Chicken"}
     try:
-        result = burger_factory(data)
-        assert "bread" in result
-    except Exception as e:
-        assert False, f"Unexpected error: {e}"
+        BurgerSchema().load(data)
+        assert False
+    except marshmallow.ValidationError as e:
+        assert "bread" in e.messages
 
 
 def test_missing_patty():
     data = {"bread": "Whole meat"}
     try:
-        result = burger_factory(data)
-        assert "patty" in result
-    except Exception as e:
-        assert False, f"Unexpected error: {e}"
+        BurgerSchema().load(data)
+        assert False
+    except marshmallow.ValidationError as e:
+        assert "patty" in e.messages
 
 
 def test_invalid_bread_data():
     data = {"bread": 5, "patty": "Chicken"}
     try:
-        result = burger_factory(data)
-        assert "bread" in result
-    except Exception as e:
-        assert False, f"Unexpected error: {e}"
+        BurgerSchema().load(data)
+        assert False
+    except marshmallow.ValidationError as e:
+        assert "bread" in e.messages
 
 
 def test_invalid_patty_data():
     data = {"bread": "Whole meat", "patty": 5}
     try:
-        result = burger_factory(data)
-        assert "patty" in result
-    except Exception as e:
-        assert False, f"Unexpected error: {e}"
+        BurgerSchema().load(data)
+        assert False
+    except marshmallow.ValidationError as e:
+        assert "patty" in e.messages
+
+
+def test_invalid_sauce_data():
+    data = {"bread": "Whole meat", "patty": "Chicken", "sauce": 5}
+    try:
+        BurgerSchema().load(data)
+        assert False
+    except marshmallow.ValidationError as e:
+        assert "sauce" in e.messages
 
 
 def test_empty_bread_field():
     data = {"bread": "", "patty": "Chicken"}
     try:
-        result = burger_factory(data)
-        assert "bread" in result
-    except Exception as e:
-        assert False, f"Unexpected error: {e}"
+        BurgerSchema().load(data)
+        assert False
+    except marshmallow.ValidationError as e:
+        assert "bread" in e.messages
 
 
 def test_empty_patty_field():
     data = {"bread": "Whole meat", "patty": ""}
     try:
-        result = burger_factory(data)
-        assert "patty" in result
-    except Exception as e:
-        assert False, f"Unexpected error: {e}"
+        BurgerSchema().load(data)
+        assert False
+    except marshmallow.ValidationError as e:
+        assert "patty" in e.messages
 
 
 def test_bread_none():
     data = {"bread": None, "patty": "Chicken"}
     try:
-        result = burger_factory(data)
-        assert "bread" in result
-    except Exception as e:
-        assert False, f"Unexpected error: {e}"
+        BurgerSchema().load(data)
+        assert False
+    except marshmallow.ValidationError as e:
+        assert "bread" in e.messages
 
 
 def test_patty_none():
     data = {"bread": "Whole meat", "patty": None}
     try:
-        result = burger_factory(data)
-        assert "patty" in result
-    except Exception as e:
-        assert False, f"Unexpected error: {e}"
+        BurgerSchema().load(data)
+        assert False
+    except marshmallow.ValidationError as e:
+        assert "patty" in e.messages
 
 
 def test_valid_toppings():
     data = {"bread": "Whole wheat", "patty": "Beef", "toppings": ["Lettuce", "Tomato", "Onion"]}
     try:
+        validated_data = BurgerSchema().load(data)
         result = burger_factory(data)
-        assert result["toppings"] == ["Lettuce", "Tomato", "Onion"]
-    except Exception as e:
-        assert False, f"Unexpected error: {e}"
+        assert result == validated_data
+    except marshmallow.ValidationError as e:
+        assert False, f"Unexpected validation error: {e}"
 
 
 def test_invalid_toppings_not_a_list():
     data = {"bread": "Whole wheat", "patty": "Beef", "toppings": "Lettuce"}
     try:
-        result = burger_factory(data)
-        assert "toppings" in result
-    except Exception as e:
-        assert False, f"Unexpected error: {e}"
+        BurgerSchema().load(data)
+        assert False
+    except marshmallow.ValidationError as e:
+        assert "toppings" in e.messages
 
 
 def test_invalid_toppings_with_non_string_elements():
     data = {"bread": "Whole wheat", "patty": "Beef", "toppings": ["Lettuce", 123]}
     try:
-        result = burger_factory(data)
-        assert "toppings" in result
-    except Exception as e:
-        assert False, f"Unexpected error: {e}"
+        BurgerSchema().load(data)
+        assert False
+    except marshmallow.ValidationError as e:
+        assert "toppings" in e.messages
 
 
 def test_empty_toppings():
     data = {"bread": "Whole wheat", "patty": "Beef", "toppings": []}
     try:
+        validated_data = BurgerSchema().load(data)
         result = burger_factory(data)
-        assert result["toppings"] == []
-    except Exception as e:
-        assert False, f"Unexpected error: {e}"
+        assert result == validated_data
+    except marshmallow.ValidationError as e:
+        assert False, f"Unexpected validation error: {e}"
+
+
+def test_bread_false():
+    data = {"bread": False, "patty": "Beef", "sauce": "BBQ"}
+    try:
+        BurgerSchema().load(data)
+        assert False
+    except marshmallow.ValidationError as e:
+        assert "bread" in e.messages
+
+
+def test_patty_false():
+    data = {"bread": "Whole wheat", "patty": False, "sauce": "BBQ"}
+    try:
+        BurgerSchema().load(data)
+        assert False
+    except marshmallow.ValidationError as e:
+        assert "patty" in e.messages
 
 
 def test_sauce_false():
     data = {"bread": "Whole wheat", "patty": "Beef", "sauce": False}
     try:
-        result = burger_factory(data)
-        assert "sauce" in result
-    except Exception as e:
-        assert False, f"Unexpected error: {e}"
+        BurgerSchema().load(data)
+        assert False
+    except marshmallow.ValidationError as e:
+        assert "sauce" in e.messages
 
 
 def test_toppings_false():
     data = {"bread": "Whole wheat", "patty": "Beef", "toppings": False}
     try:
-        result = burger_factory(data)
-        assert "toppings" in result
-    except Exception as e:
-        assert False, f"Unexpected error: {e}"
+        BurgerSchema().load(data)
+        assert False
+    except marshmallow.ValidationError as e:
+        assert "toppings" in e.messages
 
 
 def test_toppings_contain_false():
     data = {"bread": "Whole wheat", "patty": "Beef", "toppings": ["Lettuce", False]}
     try:
-        result = burger_factory(data)
-        assert "toppings" in result
-    except Exception as e:
-        assert False, f"Unexpected error: {e}"
+        BurgerSchema().load(data)
+        assert False
+    except marshmallow.ValidationError as e:
+        assert "toppings" in e.messages
