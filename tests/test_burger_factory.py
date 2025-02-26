@@ -29,3 +29,15 @@ def test_valid_toppings():
 
     burger_object = burger_factory(validated_data)
     assert isinstance(burger_object, Burger)
+
+
+def test_missing_bread():
+    data = {"patty": "Chicken"}
+    with pytest.raises(marshmallow.ValidationError):
+        BurgerSchema().load(data)
+
+
+def test_missing_patty():
+    data = {"bread": "Whole meat"}
+    with pytest.raises(marshmallow.ValidationError):
+        BurgerSchema().load(data)
