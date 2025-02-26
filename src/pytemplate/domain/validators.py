@@ -9,13 +9,14 @@ class BurgerSchema(marshmallow.Schema):
 
     @marshmallow.validates("bread")
     def validate_bread(self, value):
-        if not isinstance(value, str) or not value.strip():
+        if not isinstance(value, str) or not value.strip() or value is False:
             raise marshmallow.ValidationError("Bread field must be a non-empty string.")
 
     @marshmallow.validates("patty")
     def validate_patty(self, value):
-        if not isinstance(value, str) or not value.strip():
+        if not isinstance(value, str) or not value.strip() or value is False:
             raise marshmallow.ValidationError("Patty field must be a non-empty string.")
+
 
 
 def burger_factory(data):
