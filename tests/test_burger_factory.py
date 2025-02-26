@@ -7,30 +7,34 @@ from pytemplate.domain.validators import BurgerSchema
 
 def test_valid_data():
     data = {"bread": "Whole meat", "patty": "Chicken"}
-    validated_data = BurgerSchema().load(data)
-    burger_object = burger_factory(validated_data)
+
     try:
-        assert burger_object.bread == data["bread"]
-        assert burger_object.patty == data["patty"]
-    except Exception as e:
-        pytest.raises(marshmallow.ValidationError)
+        validated_data = BurgerSchema().load(data)
+    except marshmallow.ValidationError as e:
+        pytest.fail(f"Schema validation failed: {e}")
+
+    burger_object = burger_factory(validated_data)
+
+    assert burger_object.bread == data["bread"]
+    assert burger_object.patty == data["patty"]
 
 
 def test_missing_bread():
     data = {"patty": "Chicken"}
-    with pytest.raises(marshmallow.ValidationError) as e:
+    try:
         validated_data = BurgerSchema().load(data)
         burger_factory(validated_data)
+    except marshmallow.ValidationError as e:
+        pytest.raises(marshmallow.ValidationError)
+
+
+def test_missing_patty():
+    data = {"bread": "Whole meat"}
+    with pytest.raises(marshmallow.ValidationError) as e:
+        BurgerSchema().load(data)
+    if not "patty" in e.value.messages:
+        pytest.fail()
     assert "patty" in e.value.messages
-
-
-# def test_missing_patty():
-#     data = {"bread": "Whole meat"}
-#     with pytest.raises(marshmallow.ValidationError) as e:
-#         BurgerSchema().load(data)
-#     if not "patty" in e.value.messages:
-#         pytest.fail()
-#     assert "patty" in e.value.messages
 
 
 # def test_invalid_bread_data():
