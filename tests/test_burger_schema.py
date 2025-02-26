@@ -120,3 +120,38 @@ def test_valid_toppings_and_sauce():
     result = BurgerSchema().load(data)
     assert result["sauce"] == "BBQ"
     assert result["toppings"] == ["Cheese", "Pickles"]
+
+
+def test_bread_false():
+    """Ensure False as bread is rejected"""
+    data = {"bread": False, "patty": "Beef"}
+    with pytest.raises(ValidationError):
+        BurgerSchema().load(data)
+
+
+def test_patty_false():
+    """Ensure False as patty is rejected"""
+    data = {"bread": "Whole wheat", "patty": False}
+    with pytest.raises(ValidationError):
+        BurgerSchema().load(data)
+
+
+def test_sauce_false():
+    """Ensure False as sauce is rejected"""
+    data = {"bread": "Whole wheat", "patty": "Beef", "sauce": False}
+    with pytest.raises(ValidationError):
+        BurgerSchema().load(data)
+
+
+def test_toppings_false():
+    """Ensure False as toppings is rejected"""
+    data = {"bread": "Whole wheat", "patty": "Beef", "toppings": False}
+    with pytest.raises(ValidationError):
+        BurgerSchema().load(data)
+
+
+def test_toppings_contain_false():
+    """Ensure toppings list containing False is rejected"""
+    data = {"bread": "Whole wheat", "patty": "Beef", "toppings": ["Lettuce", False]}
+    with pytest.raises(ValidationError):
+        BurgerSchema().load(data)
