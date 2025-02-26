@@ -10,7 +10,7 @@ def test_valid_data():
     validated_data = BurgerSchema().load(data)
     result = burger_factory(data)
     if result != validated_data:
-        pytest.fails(f"Test failed because the result was {result}, expected {validated_data}")
+        pytest.fail(f"Test failed because the result was {result}, expected {validated_data}")
     assert result == validated_data
 
 
@@ -18,6 +18,8 @@ def test_missing_bread():
     data = {"patty": "Chicken"}
     with pytest.raises(marshmallow.ValidationError) as e:
         BurgerSchema().load(data)
+    if not "bread" in e.value.messages:
+        pytest.fail()
     assert "bread" in e.value.messages
 
 
