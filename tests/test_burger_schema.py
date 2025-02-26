@@ -169,8 +169,8 @@ def test_toppings_false():
 
 def test_toppings_contain_false():
     data = {"bread": "Whole wheat", "patty": "Beef", "toppings": ["Lettuce", False]}
-    with pytest.raises(marshmallow.ValidationError) as e:
+    try:
         BurgerSchema().load(data)
-    if not "toppings" in e.value.messages:
-        pytest.fail()
-    assert "toppings" in e.value.messages
+        assert False
+    except marshmallow.ValidationError as e:
+        assert "toppings" in e.messages
