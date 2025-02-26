@@ -17,19 +17,6 @@ class BurgerSchema(marshmallow.Schema):
         if not isinstance(value, str) or not value.strip():
             raise marshmallow.ValidationError("Patty field must be a non-empty string.")
 
-    @marshmallow.validates("sauce")
-    def validate_sauce(self, value):
-        if value is not None and not isinstance(value, str):
-            raise marshmallow.ValidationError("Sauce must be a string or None.")
-
-    @marshmallow.validates("toppings")
-    def validate_toppings(self, value):
-        if value is not None:
-            if not isinstance(value, list):
-                raise marshmallow.ValidationError("Toppings must be a list.")
-            if not all(isinstance(item, str) and item.strip() for item in value):
-                raise marshmallow.ValidationError("All toppings must be non-empty strings.")
-
 
 def burger_factory(data):
     try:
