@@ -10,8 +10,8 @@ class Burger:
     toppings: Optional[List[str]] = None
 
     def __str__(self):
-        toppings_str = ", ".join(self.toppings) if self.toppings else "No toppings"
-        sauce_str = "No sauce" if self.sauce is None else self.sauce
+        toppings_str = ", ".join(self.toppings) if self.toppings else "no toppings"
+        sauce_str = "no sauce" if self.sauce is None else self.sauce
         return f"Burger with {self.bread} bread, {self.patty} patty. Sauce: {sauce_str}, Toppings: {toppings_str}"
 
     def __post_init__(self):

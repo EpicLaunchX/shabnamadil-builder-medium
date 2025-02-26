@@ -62,4 +62,4 @@ def test_str_method():
 
 def test_default_str_method():
     burger = Burger(bread="Whole wheat", patty="Chicken")
-    assert str(burger) == "Burger with Whole wheat bread, Chicken patty. Sauce: No sauce, Toppings: No toppings"
+    assert str(burger) == "Burger with Whole wheat bread, Chicken patty. Sauce: no sauce, Toppings: no toppings"
