@@ -21,7 +21,7 @@ def test_valid_data():
 
 
 def test_valid_toppings():
-    data = {"bread": "Whole wheat", "patty": "Beef", "toppings": ["Lettuce", "Tomato", "Onion"]}
+    data = {"bread": "Whole wheat", "patty": "Beef", "sauce": "BBQ", "toppings": ["Lettuce", "Tomato", "Onion"]}
     try:
         validated_data = BurgerSchema().load(data)
     except marshmallow.ValidationError as e:
