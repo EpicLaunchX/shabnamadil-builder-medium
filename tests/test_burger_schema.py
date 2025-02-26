@@ -40,3 +40,33 @@ def test_invalid_patty_data():
     data = {"bread": "Whole meat", "patty": 5}
     with pytest.raises(ValidationError):
         BurgerSchema().load(data)
+
+
+def test_missing_both_fields():
+    data = {}
+    with pytest.raises(ValidationError):
+        BurgerSchema().load(data)
+
+
+def test_empty_bread_field():
+    data = {"bread": "", "patty": "Chicken"}
+    with pytest.raises(ValidationError):
+        BurgerSchema().load(data)
+
+
+def test_empy_patty_field():
+    data = {"bread": "Whole meat", "patty": ""}
+    with pytest.raises(ValidationError):
+        BurgerSchema().load(data)
+
+
+def test_bread_none():
+    data = {"bread": None, "patty": "Chicken"}
+    with pytest.raises(ValidationError):
+        BurgerSchema().load(data)
+
+
+def test_patty_none():
+    data = {"bread": "Whole meat", "patty": None}
+    with pytest.raises(ValidationError):
+        BurgerSchema().load(data)
