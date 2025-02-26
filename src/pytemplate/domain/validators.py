@@ -7,18 +7,13 @@ class BurgerSchema(Schema):
 
     @validates("bread")
     def validate_bread(self, value):
-        if not isinstance(value, str):
-            raise ValidationError("Bread field must be a string")
-
         if value is None or value == "":
             raise ValidationError("Bread field is required")
 
     @validates("patty")
     def validate_patty(self, value):
-        if not isinstance(value, str):
-            raise ValidationError("Bread field must be a string")
         if value is None or value == "":
-            raise ValidationError("Bread field is required")
+            raise ValidationError("Patty field is required")
 
 
 def burger_factory(data):
