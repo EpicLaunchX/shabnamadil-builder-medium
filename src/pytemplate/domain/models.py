@@ -44,4 +44,4 @@ def burger_factory(data):
         validated_data = BurgerSchema().load(data)
         return Burger(**validated_data)
     except marshmallow.ValidationError as err:
-        return err.messages
+        raise marshmallow.ValidationError(err.messages)

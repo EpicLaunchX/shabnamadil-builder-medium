@@ -34,10 +34,10 @@ def test_valid_toppings():
 def test_missing_bread():
     data = {"patty": "Chicken"}
     with pytest.raises(marshmallow.ValidationError):
-        BurgerSchema().load(data)
+        burger_factory(data)
 
 
 def test_missing_patty():
     data = {"bread": "Whole meat"}
     with pytest.raises(marshmallow.ValidationError):
-        BurgerSchema().load(data)
+        burger_factory(data)
