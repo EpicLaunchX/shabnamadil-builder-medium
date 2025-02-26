@@ -14,3 +14,11 @@ def validate_required(value):
 class BurgerSchema(Schema):
     bread = fields.Str(required=True, validate=[validate_field_type, validate_required])
     patty = fields.Str(required=True, validate=[validate_field_type, validate_required])
+
+
+def burger_factory(data):
+    try:
+        validated_data = BurgerSchema().load(data)
+        return validated_data
+    except ValidationError as err:
+        return {"errors": err.messages}
