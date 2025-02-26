@@ -1,72 +1,63 @@
-import pytest
-from marshmallow import ValidationError
-
-from pytemplate.domain.validators import BurgerSchema
+from pytemplate.domain.validators import burger_factory
 
 
 def test_valid_data():
-    data = {"bread": "Whole meat", "patty": "Chicken"}
-
-    # Test deserialization(load)
-    result = BurgerSchema().load(data)
-    assert result["bread"] == "Whole meat"
-    assert result["patty"] == "Chicken"
-
-    # Test serialization(dump)
-    serializied_data = BurgerSchema().dump(result)
-    assert serializied_data["bread"] == "Whole meat"
-    assert serializied_data["patty"] == "Chicken"
+    data = {"bread": "Whole wheat", "patty": "Beef"}
+    result = burger_factory(data)
+    assert result == {"bread": "Whole wheat", "patty": "Beef"}
 
 
 def test_missing_bread():
-    data = {"patty": "Chicken"}
-    with pytest.raises(ValidationError):
-        BurgerSchema().load(data)
+    data = {"patty": "Beef"}
+    result = burger_factory(data)
+    assert "errors" in result
+    assert "bread" in result["errors"]
 
 
 def test_missing_patty():
-    data = {"bread": "Whole meat"}
-    with pytest.raises(ValidationError):
-        BurgerSchema().load(data)
+    data = {"bread": "Whole wheat"}
+    result = burger_factory(data)
+    assert "errors" in result
+    assert "patty" in result["errors"]
 
 
-def test_invalid_bread_data():
-    data = {"bread": 5, "patty": "Chicken"}
-    with pytest.raises(ValidationError):
-        BurgerSchema().load(data)
+def test_invalid_bread_type():
+    data = {"bread": 123, "patty": "Beef"}
+    result = burger_factory(data)
+    assert "errors" in result
+    assert "bread" in result["errors"]
 
 
-def test_invalid_patty_data():
-    data = {"bread": "Whole meat", "patty": 5}
-    with pytest.raises(ValidationError):
-        BurgerSchema().load(data)
+def test_invalid_patty_type():
+    data = {"bread": "Whole wheat", "patty": 123}
+    result = burger_factory(data)
+    assert "errors" in result
+    assert "patty" in result["errors"]
 
 
-def test_missing_both_fields():
-    data = {}
-    with pytest.raises(ValidationError):
-        BurgerSchema().load(data)
+def test_empty_bread():
+    data = {"bread": "", "patty": "Beef"}
+    result = burger_factory(data)
+    assert "errors" in result
+    assert "bread" in result["errors"]
 
 
-def test_empty_bread_field():
-    data = {"bread": "", "patty": "Chicken"}
-    with pytest.raises(ValidationError):
-        BurgerSchema().load(data)
-
-
-def test_empy_patty_field():
-    data = {"bread": "Whole meat", "patty": ""}
-    with pytest.raises(ValidationError):
-        BurgerSchema().load(data)
+def test_empty_patty():
+    data = {"bread": "Whole wheat", "patty": ""}
+    result = burger_factory(data)
+    assert "errors" in result
+    assert "patty" in result["errors"]
 
 
 def test_bread_none():
-    data = {"bread": None, "patty": "Chicken"}
-    with pytest.raises(ValidationError):
-        BurgerSchema().load(data)
+    data = {"bread": None, "patty": "Beef"}
+    result = burger_factory(data)
+    assert "errors" in result
+    assert "bread" in result["errors"]
 
 
 def test_patty_none():
-    data = {"bread": "Whole meat", "patty": None}
-    with pytest.raises(ValidationError):
-        BurgerSchema().load(data)
+    data = {"bread": "Whole wheat", "patty": None}
+    result = burger_factory(data)
+    assert "errors" in result
+    assert "patty" in result["errors"]
