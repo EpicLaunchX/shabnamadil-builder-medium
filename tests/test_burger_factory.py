@@ -1,8 +1,7 @@
 import marshmallow
 import pytest
 
-from pytemplate.domain.factory import burger_factory
-from pytemplate.domain.models import Burger
+from pytemplate.domain.models import Burger, burger_factory
 from pytemplate.domain.validators import BurgerSchema
 
 
