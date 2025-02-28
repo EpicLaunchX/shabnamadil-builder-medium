@@ -10,6 +10,9 @@ class TestBurgerBuilder(BurgerBuilder):
     def meat(self, meat: str):
         super().meat(meat)
 
+    def patty(self, patty):
+        return super().patty(patty)
+
     def sauce(self, sauce: str):
         super().sauce(sauce)
 
@@ -28,6 +31,9 @@ def test_not_implemented_error():
 
     with pytest.raises(NotImplementedError):
         builder.meat("Beef")
+
+    with pytest.raises(NotImplementedError):
+        builder.patty("Chicken")
 
     with pytest.raises(NotImplementedError):
         builder.sauce("Mayo")
