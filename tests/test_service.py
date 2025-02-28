@@ -2,7 +2,15 @@ import pytest
 
 from pytemplate.service.burger import BurgerBuilder
 
+
+def test_abstract_class_cannot_be_instantiated():
+    with pytest.raises(TypeError):
+        BurgerBuilder()
+    pass
+
+
 def test_not_implemented_error():
+
     class TestBurgerBuilder(BurgerBuilder):
         def bread(self, bread):
             return super().bread(bread)
@@ -21,8 +29,6 @@ def test_not_implemented_error():
 
         def build(self):
             return super().build()
-
-
 
     builder = TestBurgerBuilder()
 
@@ -44,9 +50,3 @@ def test_not_implemented_error():
 
     with pytest.raises(NotImplementedError):
         builder.build()
-
-
-def test_abstract_class_cannot_be_instantiated():
-    with pytest.raises(TypeError):
-        BurgerBuilder()
-    pass
