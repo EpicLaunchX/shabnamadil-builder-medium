@@ -56,3 +56,6 @@ class CheeseBurgerBuilder(BurgerBuilder):
     def build(self):
         data = {"bread": self._bread, "patty": self._patty, "sauce": self._sauce, "toppings": self._toppings}
         return burger_factory(data)
+    
+    def __str__(self):
+        return super().__str__()
