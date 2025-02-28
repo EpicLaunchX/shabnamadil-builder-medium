@@ -37,25 +37,25 @@ class CheeseBurgerBuilder(BurgerBuilder):
         self._sauce = None
         self._toppings = None
 
-    def bread(self, bread):
+    def bread(self, bread: str):
         self._bread = bread
         return self
 
-    def patty(self, patty):
+    def patty(self, patty: str):
         self._patty = patty
         return self
 
-    def sauce(self, sauce):
+    def sauce(self, sauce: str):
         self._sauce = sauce
         return self
 
-    def toppings(self, toppings):
+    def toppings(self, toppings: list[str]):
         self._toppings = toppings
         return self
 
     def build(self):
         data = {"bread": self._bread, "patty": self._patty, "sauce": self._sauce, "toppings": self._toppings}
         return burger_factory(data)
-    
+
     def __str__(self):
-        return super().__str__()
+        return f"Burger with {self._bread}, {self._patty}"
