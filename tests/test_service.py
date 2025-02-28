@@ -1,28 +1,26 @@
-from typing import List
-
 import pytest
 
 from pytemplate.service.burger import BurgerBuilder
 
 
 class TestBurgerBuilder(BurgerBuilder):
-    def bread(self, bread):
-        return super().bread(bread)
+    def bread(self, bread: str):
+        raise NotImplementedError("bread() is not implemented in TestBurgerBuilder")
 
     def meat(self, meat: str):
-        super().meat(meat)
+        raise NotImplementedError("meat() is not implemented in TestBurgerBuilder")
 
-    def patty(self, patty):
-        super().patty(patty)
+    def patty(self, patty: str):
+        raise NotImplementedError("patty() is not implemented in TestBurgerBuilder")
 
     def sauce(self, sauce: str):
-        super().sauce(sauce)
+        raise NotImplementedError("sauce() is not implemented in TestBurgerBuilder")
 
-    def toppings(self, toppings: List[str]):
-        super().toppings(toppings)
+    def toppings(self, toppings: list[str]):
+        raise NotImplementedError("toppings() is not implemented in TestBurgerBuilder")
 
     def build(self):
-        super().build()
+        raise NotImplementedError("build() is not implemented in TestBurgerBuilder")
 
 
 def test_not_implemented_error():
