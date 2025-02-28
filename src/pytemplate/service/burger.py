@@ -1,5 +1,7 @@
 from abc import ABC, abstractmethod
 
+from pytemplate.domain.models import burger_factory
+
 
 class BurgerBuilder(ABC):
 
@@ -26,3 +28,28 @@ class BurgerBuilder(ABC):
     @abstractmethod
     def build(self):
         raise NotImplementedError("build() must be implemented by subclasses")
+
+
+class CheeseBurgerBuilder(BurgerBuilder):
+    def __init__(self):
+        pass
+
+    def bread(self, bread):
+        self._bread = bread
+        return self
+
+    def patty(self, patty):
+        self._patty = patty
+        return self
+
+    def sauce(self, sauce):
+        self._sauce = sauce
+        return self
+
+    def toppings(self, toppings):
+        self._toppings = toppings
+        return self
+
+    def build(self):
+        data = {"bread": self.bread(), "patty": self.patty(), "sauce": self.sauce(), "toppings": self.toppings()}
+        return burger_factory(data)
