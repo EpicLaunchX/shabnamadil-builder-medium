@@ -50,3 +50,4 @@ def test_not_implemented_error():
 
     with pytest.raises(NotImplementedError):
         builder.build()
+
