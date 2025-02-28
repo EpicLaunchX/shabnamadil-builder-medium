@@ -8,19 +8,19 @@ class TestBurgerBuilder(BurgerBuilder):
         return super().bread(bread)
 
     def meat(self, meat: str):
-        super().meat(meat)
+        return super().meat(meat)
 
     def patty(self, patty):
         return super().patty(patty)
 
     def sauce(self, sauce: str):
-        super().sauce(sauce)
+        return super().sauce(sauce)
 
     def toppings(self, toppings: list[str]):
-        super().toppings(toppings)
-
+        return super().toppings(toppings)
+    
     def build(self):
-        super().build()
+        return super().build()
 
 
 def test_not_implemented_error():
