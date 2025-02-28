@@ -1,12 +1,13 @@
+from typing import List
+
 import pytest
 
-from typing import List
 from pytemplate.service.burger import BurgerBuilder
 
 
 class TestBurgerBuilder(BurgerBuilder):
     def bread(self, bread):
-        super().bread(bread)
+        return super().bread(bread)
 
     def meat(self, meat: str):
         super().meat(meat)
@@ -19,7 +20,7 @@ class TestBurgerBuilder(BurgerBuilder):
 
     def toppings(self, toppings: List[str]):
         super().toppings(toppings)
-    
+
     def build(self):
         super().build()
 
