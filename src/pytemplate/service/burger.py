@@ -8,8 +8,8 @@ class BurgerBuilder(ABC):
         raise NotImplementedError("bread() must be implemented by subclasses")
 
     @abstractmethod
-    def patty(self, patty: str):
-        raise NotImplementedError("patty() must be implemented by subclasses")
+    def meat(self, meat: str):
+        raise NotImplementedError("meat() must be implemented by subclasses")
 
     @abstractmethod
     def sauce(self, sauce: str):
