@@ -1,6 +1,6 @@
 import pytest
 
-from pytemplate.service.burger import BurgerBuilder
+from pytemplate.service.burger import BurgerBuilder, CheeseBurgerBuilder
 
 
 def test_abstract_class_cannot_be_instantiated():
@@ -35,8 +35,8 @@ def test_not_implemented_error():
     with pytest.raises(NotImplementedError):
         builder.bread("Whole wheat")
 
-    with pytest.raises(NotImplementedError):
-        builder.meat("Beef")
+    # with pytest.raises(NotImplementedError):
+    #     builder.meat("Beef")
 
     with pytest.raises(NotImplementedError):
         builder.patty("Chicken")
@@ -50,3 +50,18 @@ def test_not_implemented_error():
 
     with pytest.raises(NotImplementedError):
         builder.build()
+
+
+def test_build_cheese_burger():
+    toppings_list = ["Lettuce", "Tomato"]
+    data = {"bread": "Whole wheat", "patty": "Chicken", "sauce": "BBQ", "toppings": toppings_list}
+    cheese_burger = CheeseBurgerBuilder()
+    cheese_burger.bread(data["bread"])
+    cheese_burger.patty(data["patty"])
+    cheese_burger.sauce(data["sauce"])
+    cheese_burger.toppings(data["toppings"])
+    cheese_burger.build()
+    assert cheese_burger._bread == data["bread"]
+    assert cheese_burger._patty == data["patty"]
+    assert cheese_burger._sauce == data["sauce"]
+    assert cheese_burger._toppings == data["toppings"]
