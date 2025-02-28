@@ -6,22 +6,22 @@ from pytemplate.service.burger import BurgerBuilder
 
 class TestBurgerBuilder(BurgerBuilder):
     def bread(self, bread):
-        return super().bread(bread)
+        super().bread(bread)
 
     def meat(self, meat: str):
-        return super().meat(meat)
+        super().meat(meat)
 
     def patty(self, patty):
-        return super().patty(patty)
+        super().patty(patty)
 
     def sauce(self, sauce: str):
-        return super().sauce(sauce)
+        super().sauce(sauce)
 
     def toppings(self, toppings: List[str]):
-        return super().toppings(toppings)
+        super().toppings(toppings)
     
     def build(self):
-        return super().build()
+        super().build()
 
 
 def test_not_implemented_error():
