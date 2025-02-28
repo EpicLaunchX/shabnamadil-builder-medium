@@ -32,7 +32,10 @@ class BurgerBuilder(ABC):
 
 class CheeseBurgerBuilder(BurgerBuilder):
     def __init__(self):
-        pass
+        self._bread = None
+        self._patty = None
+        self._sauce = None
+        self._toppings = None
 
     def bread(self, bread):
         self._bread = bread
