@@ -39,8 +39,9 @@ def test_not_implemented_error():
     with pytest.raises(NotImplementedError):
         builder.sauce("Mayo")
 
+    toppings_list = ["Lettuce", "Tomato"]
     with pytest.raises(NotImplementedError):
-        builder.toppings(["Lettuce", "Tomato"])
+        builder.toppings(toppings_list)
 
     with pytest.raises(NotImplementedError):
         builder.build()
