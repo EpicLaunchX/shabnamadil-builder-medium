@@ -2,28 +2,28 @@ import pytest
 
 from pytemplate.service.burger import BurgerBuilder
 
-
-class TestBurgerBuilder(BurgerBuilder):
-    def bread(self, bread: str):
-        raise NotImplementedError("bread() is not implemented in TestBurgerBuilder")
-
-    def meat(self, meat: str):
-        raise NotImplementedError("meat() is not implemented in TestBurgerBuilder")
-
-    def patty(self, patty: str):
-        raise NotImplementedError("patty() is not implemented in TestBurgerBuilder")
-
-    def sauce(self, sauce: str):
-        raise NotImplementedError("sauce() is not implemented in TestBurgerBuilder")
-
-    def toppings(self, toppings: list[str]):
-        raise NotImplementedError("toppings() is not implemented in TestBurgerBuilder")
-
-    def build(self):
-        raise NotImplementedError("build() is not implemented in TestBurgerBuilder")
-
-
 def test_not_implemented_error():
+    class TestBurgerBuilder(BurgerBuilder):
+        def bread(self, bread):
+            return super().bread(bread)
+
+        def meat(self, meat: str):
+            return super().meat(meat)
+
+        def patty(self, patty):
+            return super().patty(patty)
+
+        def sauce(self, sauce: str):
+            return super().sauce(sauce)
+
+        def toppings(self, toppings: list[str]):
+            return super().toppings(toppings)
+
+        def build(self):
+            return super().build()
+
+
+
     builder = TestBurgerBuilder()
 
     with pytest.raises(NotImplementedError):
