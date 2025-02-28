@@ -48,3 +48,4 @@ def test_not_implemented_error():
 def test_abstract_class_cannot_be_instantiated():
     with pytest.raises(TypeError):
         BurgerBuilder()
+    pass
