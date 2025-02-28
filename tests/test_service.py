@@ -35,9 +35,6 @@ def test_not_implemented_error():
     with pytest.raises(NotImplementedError):
         builder.bread("Whole wheat")
 
-    # with pytest.raises(NotImplementedError):
-    #     builder.meat("Beef")
-
     with pytest.raises(NotImplementedError):
         builder.patty("Chicken")
 
@@ -65,3 +62,4 @@ def test_build_cheese_burger():
     assert cheese_burger._patty == data["patty"]
     assert cheese_burger._sauce == data["sauce"]
     assert cheese_burger._toppings == data["toppings"]
+    assert isinstance(cheese_burger, CheeseBurgerBuilder)
