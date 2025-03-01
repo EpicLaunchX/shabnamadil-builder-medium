@@ -13,10 +13,10 @@ from pytemplate.utils.common import get_choice_input
     [
         (
             "chicken",
-            Burger(bread="Sesame Seed Bun", patty="Chicken", sauce="Ketchup", toppings=["Lettuce", "Tomato"]),
+            "Burger with Sesame Seed Bun bread, Chicken patty. Sauce: Ketchup, Toppings: Lettuce, Tomato"
         ),
-        ("cheese", Burger(bread="Sesame Seed Bun", patty="Chicken", sauce="Ketchup", toppings=["Lettuce", "Tomato"])),
-        ("vegan", Burger(bread="Sesame Seed Bun", patty="Chicken", sauce="Ketchup", toppings=["Lettuce", "Tomato"])),
+        ("cheese", "Burger with Sesame Seed Bun bread, Beef patty. Sauce: Ketchup, Toppings: Lettuce, Tomato"),
+        ("vegan", "Burger with Sesame Seed Bun bread, Veggie patty. Sauce: Ketchup, Toppings: Lettuce, Tomato"),
     ],
 )
 def test_main_valid_inputs(mock_input, expected_output):
