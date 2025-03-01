@@ -41,20 +41,8 @@ def test_main_invalid_inputs(mock_input, expected_exception, error_message):
             main()
 
 
-@pytest.mark.integration
 @pytest.mark.parametrize("interrupt_exception", [EOFError, KeyboardInterrupt])
 def test_get_choice_input_interrupted(interrupt_exception):
     with mock.patch("builtins.input", side_effect=interrupt_exception):
         with pytest.raises(ValidationError, match="Input was interrupted. Please try again."):
             get_choice_input()
-
-
-# @pytest.mark.integration
-# def test_main_unexpected_error():
-#     with (
-#         mock.patch("builtins.input", side_effect=["chicken"]),
-#         mock.patch.object(ChickenBurgerBuilder, "build", side_effect=Exception("Some unexpected error")),
-#     ):
-
-#         with pytest.raises(ValidationError, match="An unexpected error occurred while creating the burger."):
-#             main()
