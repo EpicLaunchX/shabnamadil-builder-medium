@@ -3,8 +3,8 @@ from unittest import mock
 import pytest
 from marshmallow import ValidationError
 
+from pytemplate.domain.models import Burger
 from pytemplate.entrypoints.cli.main import main
-from pytemplate.service.burger import CheeseBurgerBuilder, ChickenBurgerBuilder, VeggieBurgerBuilder
 from pytemplate.utils.common import get_choice_input
 
 
@@ -13,10 +13,10 @@ from pytemplate.utils.common import get_choice_input
     [
         (
             "chicken",
-            ChickenBurgerBuilder().bread("Sesame Seed Bun").patty("Chicken").sauce("Ketchup").toppings(["Lettuce", "Tomato"]).build(),
+            Burger(bread="Sesame Seed Bun", patty="Chicken", sauce="Ketchup", toppings=["Lettuce", "Tomato"]),
         ),
-        ("cheese", CheeseBurgerBuilder().bread("Sesame Seed Bun").patty("Beef").sauce("Ketchup").toppings(["Lettuce", "Tomato"]).build()),
-        ("vegan", VeggieBurgerBuilder().bread("Sesame Seed Bun").patty("Veggie").sauce("Ketchup").toppings(["Lettuce", "Tomato"]).build()),
+        ("cheese", Burger(bread="Sesame Seed Bun", patty="Chicken", sauce="Ketchup", toppings=["Lettuce", "Tomato"])),
+        ("vegan", Burger(bread="Sesame Seed Bun", patty="Chicken", sauce="Ketchup", toppings=["Lettuce", "Tomato"])),
     ],
 )
 def test_main_valid_inputs(mock_input, expected_output):

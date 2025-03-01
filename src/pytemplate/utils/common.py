@@ -2,8 +2,6 @@
 
 from marshmallow import ValidationError
 
-from pytemplate.service.burger import CheeseBurgerBuilder, ChickenBurgerBuilder, VeggieBurgerBuilder
-
 
 def get_choice_input():
     valid_choices = {"chicken", "vegan", "cheese"}
@@ -14,15 +12,3 @@ def get_choice_input():
         return choice
     except (EOFError, KeyboardInterrupt) as err:
         raise ValidationError("Input was interrupted. Please try again.") from err
-
-
-def create_chicken_burger():
-    return ChickenBurgerBuilder().bread("Sesame Seed Bun").patty("Chicken").sauce("Ketchup").toppings(["Lettuce", "Tomato"]).build()
-
-
-def create_cheese_burger():
-    return CheeseBurgerBuilder().bread("Sesame Seed Bun").patty("Beef").sauce("Ketchup").toppings(["Lettuce", "Tomato"]).build()
-
-
-def create_vegan_burger():
-    return VeggieBurgerBuilder().bread("Sesame Seed Bun").patty("Veggie").sauce("Ketchup").toppings(["Lettuce", "Tomato"]).build()
