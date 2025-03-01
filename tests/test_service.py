@@ -2,7 +2,7 @@ import pytest
 from marshmallow import ValidationError
 
 from pytemplate.domain.models import Burger
-from pytemplate.service.burger import BurgerBuilder, CheeseBurgerBuilder, ChickenBurgerBuilder
+from pytemplate.service.burger import BurgerBuilder, CheeseBurgerBuilder, ChickenBurgerBuilder, VeggieBurgerBuilder
 
 
 def test_abstract_class_cannot_be_instantiated():
@@ -189,3 +189,73 @@ def test_chickenburger_builder_toppings_with_invalid_items():
 
     with pytest.raises(ValidationError):
         builder.bread("White").patty("Beef").toppings(["Lettuce", 123]).build()
+
+
+def test_veggieburger_builder_full():
+    toppings_list = ["Lettuce", "Tomato"]
+    data = {"bread": "Whole wheat", "patty": "Veggie", "sauce": "Paprika", "toppings": toppings_list}
+    builder = VeggieBurgerBuilder().bread("Whole wheat").patty("Veggie").sauce("Paprika").toppings(toppings_list)
+    chicken_burger = builder.build()
+
+    assert chicken_burger.bread == data["bread"]
+    assert chicken_burger.patty == data["patty"]
+    assert chicken_burger.sauce == data["sauce"]
+    assert chicken_burger.toppings == data["toppings"]
+    assert chicken_burger.__str__() == "Burger with Whole wheat bread, Veggie patty. Sauce: Paprika, Toppings: Lettuce, Tomato"
+    assert isinstance(chicken_burger, Burger)
+    assert isinstance(builder, VeggieBurgerBuilder)
+
+
+def test_veggieburger_builder_minimal():
+    builder = VeggieBurgerBuilder().bread("Sesame").patty("Chicken")
+    burger = builder.build()
+
+    assert burger.bread == "Sesame"
+    assert burger.patty == "Chicken"
+    assert burger.sauce is None
+    assert burger.toppings is None
+
+
+def test_veggieburger_builder_no_toppings():
+    builder = VeggieBurgerBuilder().bread("Brioche").patty("Veggie").sauce("Paprika").toppings([])
+    burger = builder.build()
+
+    assert burger.bread == "Brioche"
+    assert burger.patty == "Veggie"
+    assert burger.sauce == "Paprika"
+    assert burger.toppings == []
+
+
+def test_veggie_burger_builder_invalid_bread():
+    builder = VeggieBurgerBuilder()
+
+    with pytest.raises(ValidationError):
+        builder.bread(123).patty("Veggie").build()
+
+
+def test_veggieburger_builder_invalid_patty():
+    builder = VeggieBurgerBuilder()
+
+    with pytest.raises(ValidationError):
+        builder.bread("White").patty(789).build()
+
+
+def test_veggieburger_builder_invalid_sauce():
+    builder = VeggieBurgerBuilder()
+
+    with pytest.raises(ValidationError):
+        builder.bread("White").patty("Veggie").sauce(99).build()
+
+
+def test_veggieburger_builder_invalid_toppings():
+    builder = VeggieBurgerBuilder()
+
+    with pytest.raises(ValidationError):
+        builder.bread("White").patty("Veggie").toppings("Not a list").build()
+
+
+def test_veggieburger_builder_toppings_with_invalid_items():
+    builder = VeggieBurgerBuilder()
+
+    with pytest.raises(ValidationError):
+        builder.bread("White").patty("Veggie").toppings(["Lettuce", 123]).build()
