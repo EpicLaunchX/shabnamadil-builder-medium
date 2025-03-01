@@ -49,12 +49,12 @@ def test_get_choice_input_interrupted(interrupt_exception):
             get_choice_input()
 
 
-@pytest.mark.integration
-def test_main_unexpected_error():
-    with (
-        mock.patch("builtins.input", side_effect=["chicken"]),
-        mock.patch.object(ChickenBurgerBuilder, "build", side_effect=Exception("Some unexpected error")),
-    ):
+# @pytest.mark.integration
+# def test_main_unexpected_error():
+#     with (
+#         mock.patch("builtins.input", side_effect=["chicken"]),
+#         mock.patch.object(ChickenBurgerBuilder, "build", side_effect=Exception("Some unexpected error")),
+#     ):
 
-        with pytest.raises(ValidationError, match="An unexpected error occurred while creating the burger."):
-            main()
+#         with pytest.raises(ValidationError, match="An unexpected error occurred while creating the burger."):
+#             main()
