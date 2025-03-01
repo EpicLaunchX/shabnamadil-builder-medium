@@ -8,7 +8,6 @@ from pytemplate.service.burger import CheeseBurgerBuilder, ChickenBurgerBuilder,
 from pytemplate.utils.common import get_choice_input
 
 
-@pytest.mark.integration
 @pytest.mark.parametrize(
     "mock_input, expected_output",
     [
@@ -25,7 +24,6 @@ def test_main_valid_inputs(mock_input, expected_output):
         assert main() == expected_output
 
 
-@pytest.mark.integration
 @pytest.mark.parametrize(
     "mock_input, expected_exception, error_message",
     [
