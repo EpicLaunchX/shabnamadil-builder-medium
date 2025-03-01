@@ -4,30 +4,29 @@ from pytemplate.service.burger import CheeseBurgerBuilder, ChickenBurgerBuilder,
 from pytemplate.utils.common import get_choice_input
 
 
-def get_burger_builder(choice):
-    """Returns the appropriate burger builder based on the choice."""
-    burger_map = {
-        "chicken": ChickenBurgerBuilder(),
-        "cheese": CheeseBurgerBuilder(),
-        "vegan": VeggieBurgerBuilder(),
-    }
-
-    if choice not in burger_map:
-        raise ValidationError("Invalid choice!")
-
-    return burger_map[choice]
-
-
-def build_burger(builder):
-    """Builds a burger using the builder."""
-    return builder.bread("Sesame Seed Bun").patty("Beef").sauce("Ketchup").toppings(["Lettuce", "Tomato"]).build()
+def create_burger(builder):
+    """Create a burger using the given builder."""
+    return builder().bread("Sesame Seed Bun").patty("Chicken").sauce("Ketchup").toppings(["Lettuce", "Tomato"]).build()
 
 
 def main():
-    """Main function to get input and create a burger."""
     choice = get_choice_input()
+
+    # Map the choice to the appropriate burger builder
+    burger_map = {
+        "chicken": ChickenBurgerBuilder,
+        "cheese": CheeseBurgerBuilder,
+        "vegan": VeggieBurgerBuilder,
+    }
+
     try:
-        builder = get_burger_builder(choice)
-        return build_burger(builder)
+        # Get the builder based on user choice or raise error if invalid
+        builder = burger_map.get(choice)
+        if not builder:
+            raise ValidationError("Invalid choice!")
+
+        # Call create_burger with the selected builder
+        return create_burger(builder)
+
     except Exception as err:
         raise ValidationError("An unexpected error occurred while creating the burger.") from err
