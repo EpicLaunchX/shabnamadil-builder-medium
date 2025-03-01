@@ -14,9 +14,9 @@ def main():
     try:
         if choice == 'chicken':
             return ChickenBurgerBuilder().bread("Sesame Seed Bun").patty("Chicken").sauce("Ketchup").toppings(["Lettuce", "Tomato"]).build()
-        if choice == 'cheese':
+        elif choice == 'cheese':
             return CheeseBurgerBuilder().bread("Sesame Seed Bun").patty("Beef").sauce("Ketchup").toppings(["Lettuce", "Tomato"]).build()
-        if choice == 'veggie':
+        elif choice == 'veggie':
             return VeggieBurgerBuilder().bread("Sesame Seed Bun").patty("Veggie").sauce("Ketchup").toppings(["Lettuce", "Tomato"]).build()
         
     except ValidationError as err:
