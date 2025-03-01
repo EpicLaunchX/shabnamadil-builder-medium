@@ -3,7 +3,6 @@ from unittest import mock
 import pytest
 from marshmallow import ValidationError
 
-from pytemplate.domain.models import Burger
 from pytemplate.entrypoints.cli.main import main
 from pytemplate.utils.common import get_choice_input
 
