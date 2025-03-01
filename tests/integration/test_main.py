@@ -10,10 +10,7 @@ from pytemplate.utils.common import get_choice_input
 @pytest.mark.parametrize(
     "mock_input, expected_output",
     [
-        (
-            "chicken",
-            "Burger with Sesame Seed Bun bread, Chicken patty. Sauce: Ketchup, Toppings: Lettuce, Tomato"
-        ),
+        ("chicken", "Burger with Sesame Seed Bun bread, Chicken patty. Sauce: Ketchup, Toppings: Lettuce, Tomato"),
         ("cheese", "Burger with Sesame Seed Bun bread, Beef patty. Sauce: Ketchup, Toppings: Lettuce, Tomato"),
         ("vegan", "Burger with Sesame Seed Bun bread, Veggie patty. Sauce: Ketchup, Toppings: Lettuce, Tomato"),
     ],
