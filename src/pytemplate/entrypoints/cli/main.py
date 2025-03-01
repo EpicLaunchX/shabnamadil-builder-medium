@@ -20,7 +20,7 @@ def main():
         elif choice == "vegan":
             return VeggieBurgerBuilder().bread("Sesame Seed Bun").patty("Veggie").sauce("Ketchup").toppings(["Lettuce", "Tomato"]).build()
         else:
-            raise ValidationError(f"Invalid choice: {choice}. Please select 'chicken', 'cheese', or 'vegan'.")
+            raise ValidationError(f"Invalid choice!")
 
     except ValidationError as err:
         raise ValidationError("Something went wrong") from err
